@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Dila Lalala 🩷</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff758c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* --- BACKGROUND FOTO --- */
+        #bodyblur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        #wallpaper {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #thisblur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65); 
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: -10vh;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 20px;
+            animation: floatUp 10s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Tombol & Teks Intro */
+        .intro-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .intro-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .btn-lanjut {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.6);
+            transition: transform 0.2s;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .btn-lanjut:active {
+            transform: scale(0.95);
+        }
+
+        .envelope-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Glassmorphism Card (Kartu Utama) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 30px 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: none; /* Sembunyi di awal */
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Content Styling */
+        .title {
+            font-family: 'Berkshire Swash', cursive;
+            font-size: 2.2rem;
+            color: #ff758c;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .sticker-img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .sticker-show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .lyrics-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: #fff;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        }
+
+        .lyrics-text b {
+            color: #ff758c;
+            font-size: 1.5rem;
+            font-family: 'Berkshire Swash', cursive;
+        }
+
+        .lyrics-text i {
+            color: #ffc2d1;
+        }
+
+        .fade-in-text {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Menyembunyikan elemen */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Wallpaper -->
+    <div id="bodyblur">
+        <img src="TES.jpeg" id="wallpaper" onerror="this.src='https://htmlku.com/karnakamu/bg.jpg'"/>
+        <div id="thisblur"></div>
+    </div>
+
+    <!-- Background Particle -->
+    <div class="hearts-bg" id="hearts-bg"></div>
+
+    <!-- Audio -->
+    <audio id="bgMusic" src="https://htmlku.com/karnakamu/karnakamu.mp3"></audio>
+
+    <div class="container">
+        
+        <!-- INTRO STEP 1 -->
+        <div id="step1" class="intro-box">
+            <div class="envelope-icon" onclick="nextStep(2)">💌</div>
+            <button class="btn-lanjut" onclick="nextStep(2)">Buka Suratnya 🩷</button>
+            <p style="margin-top: 15px; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">CIEEE DARI SIAPAA YAAW</p>
+        </div>
+
+        <!-- INTRO STEP 2 -->
+        <div id="step2" class="intro-box hidden">
+            <div class="intro-text">Hai Dila Lalala! 👋✨</div>
+            <button class="btn-lanjut" onclick="nextStep(3)">Lanjut</button>
+        </div>
+
+        <!-- INTRO STEP 3 -->
+        <div id="step3" class="intro-box hidden">
+            <div class="intro-text">Aku punya sesuatu nih buat kamu 🫣</div>
+            <button class="btn-lanjut" onclick="nextStep(4)">Lanjut</button>
+        </div>
+
+        <!-- INTRO STEP 4 -->
+        <div id="step4" class="intro-box hidden">
+            <div class="intro-text">Coba dengerin dan baca yaa 🎧🩷</div>
+            <button class="btn-lanjut" onclick="startMain()">Putar Lagunya</button>
+        </div>
+
+        <!-- KARTU UTAMA LIRIK (STEP 5) -->
+        <div class="glass-card" id="mainCard">
+            <h1 class="title">For DILA LALALAAA 🩷</h1>
+            
+            <img id="sticker" class="sticker-img" src="https://htmlku.com/0/panda/cilukba.gif" alt="Stiker Gemoy">
+            
+            <div id="lyricsBox" class="lyrics-text">...</div>
+        </div>
+
+    </div>
+
+    <script>
+        // Bikin Partikel Latar Belakang
+        function createHearts() {
+            const bg = document.getElementById('hearts-bg');
+            const hearts = ['🩷', '💖', '✨', '🌸', '🤍'];
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('heart-particle');
+                particle.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.fontSize = `${Math.random() * 15 + 15}px`;
+                bg.appendChild(particle);
+            }
+        }
+        createHearts();
+
+        // Navigasi Intro (Step by Step)
+        function nextStep(stepNumber) {
+            // Sembunyikan semua step intro
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+            document.getElementById('step4').classList.add('hidden');
+            
+            // Tampilkan step yang diminta
+            document.getElementById('step' + stepNumber).classList.remove('hidden');
+        }
+
+        // Konversi Millisecond ke Detik (Sesuai dengan sinkronisasi lagu asli)
+        // 2500ms = 2.5 detik
+        const lyricsData = [
+            { time: 2.5,  text: "Karena kamu <b>cantik</b> 🫶", sticker: "https://htmlku.com/0/panda/cilukba.gif" },
+            { time: 5.5,  text: "Kan kuberi segalanya<br>Apa yang ku punya 🩷", sticker: "https://htmlku.com/0/panda/gemoy.gif" },
+            { time: 9.6,  text: "Dan hatimu baik,", sticker: "https://htmlku.com/0/panda/bunga.gif" },
+            { time: 12.8, text: "Sempurnalah duniaku<br>saat kau di sisiku 🫠", sticker: "https://htmlku.com/0/panda/peluk.gif" },
+            { time: 17.0, text: "Bukan karena <i>make up</i> di wajahmu,", sticker: "https://htmlku.com/0/panda/kaget.gif" },
+            { time: 20.3, text: "Atau lipstik merah itu,", sticker: "https://htmlku.com/0/panda/ketawa.gif" },
+            { time: 24.0, text: "Lembut hati tutur kata,", sticker: "https://htmlku.com/0/panda/senang.gif" },
+            { time: 26.8, text: "Terciptalah cinta yang kupuja 🫶<br><br><b class='merah putih'>😍🥰🫣💗</b>", sticker: "https://htmlku.com/0/panda/love.gif" }
+        ];
+
+        let currentLyricIndex = 0;
+        const music = document.getElementById('bgMusic');
+        const lyricsBox = document.getElementById('lyricsBox');
+        const sticker = document.getElementById('sticker');
+
+        // Fungsi Memulai Main Card & Lagu
+        function startMain() {
+            // Sembunyikan intro terakhir
+            document.getElementById('step4').classList.add('hidden');
+            
+            // Tampilkan kartu utama
+            const card = document.getElementById('mainCard');
+            card.style.display = 'flex';
+            setTimeout(() => {
+                card.style.opacity = '1';
+                sticker.classList.add('sticker-show');
+            }, 100);
+
+            // Play Music
+            music.play();
+        }
+
+        // SINKRONISASI LIRIK ANTI DELAY!
+        // Mendeteksi waktu audio yang sedang berjalan secara real-time
+        music.addEventListener('timeupdate', () => {
+            if (currentLyricIndex < lyricsData.length) {
+                // Jika waktu lagu (dalam detik) sudah melewati batas waktu lirik saat ini
+                if (music.currentTime >= lyricsData[currentLyricIndex].time) {
+                    
+                    // Ganti Stiker
+                    sticker.src = lyricsData[currentLyricIndex].sticker;
+                    
+                    // Ganti Teks dengan efek fade-in
+                    lyricsBox.classList.remove('fade-in-text');
+                    void lyricsBox.offsetWidth; // Trigger ulang animasi CSS
+                    lyricsBox.innerHTML = lyricsData[currentLyricIndex].text;
+                    lyricsBox.classList.add('fade-in-text');
+                    
+                    // Lanjut ke lirik berikutnya di array
+                    currentLyricIndex++;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
